@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users List</title>
+  <style>
+    :root {
+      --primary-color: #0A1128;
+      --accent-color: #FFCB05;
+      --light-bg: #f4f6fa;
+      --hover-bg: #FFF7D6;
+      --text-color: #1e293b;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-bg);
+      padding: 20px;
+      color: var(--text-color);
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: var(--accent-color);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logout-btn {
+      background-color: var(--accent-color);
+      color: var(--primary-color);
+      font-weight: bold;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .logout-btn:hover {
+      background-color: #ffd84a;
+      transform: scale(1.05);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 25px;
+      color: #334155;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 16px;
+    }
+
+    li {
+      border: 2px solid var(--primary-color);
+      border-radius: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    li:hover {
+      transform: scale(1.015);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    li a {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    li a:hover {
+      background-color: var(--hover-bg);
+      color: #000;
+    }
+
+    .user-icon {
+      margin-right: 12px;
+      font-size: 1.3rem;
+    }
+
+    .group-chat-link {
+      display: block;
+      margin-top: 30px;
+      padding: 14px;
+      text-align: center;
+      background-color: var(--accent-color);
+      color: var(--primary-color);
+      font-weight: bold;
+      border-radius: 10px;
+      transition: background-color 0.3s ease, transform 0.2s;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .group-chat-link:hover {
+      background-color: #ffd84a;
+      transform: scale(1.03);
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-title {
+        font-size: 1.5rem;
+      }
+
+      .logout-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      li a {
+        font-size: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .group-chat-link {
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <header>
+    <div class="header-title">💬 Hamro Chat</div>
+    <a href="#" class="logout-btn">🔓 Logout</a>
+  </header>  
+
+  <div class="container">
+    <h2>Hello, {{ request.user.username }}</h2>
+    <h3>Start a private chat with:</h3>
+    <ul>
+      {% for user in users %}
+        <li>
+          <a href="{% url 'private-chat' user.id %}">
+            <span class="user-icon">👤</span> {{ user.username }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <a href="{% url 'chat-page' %}" class="group-chat-link">💬 Join Group Chat</a>
+  </div>
+
+</body>
+</html>
